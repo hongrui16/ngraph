@@ -35,3 +35,20 @@ shared_ptr<runtime::TensorView>
     auto rc = make_shared<runtime::HostTensorView>(element_type, shape, "external");
     return static_pointer_cast<runtime::TensorView>(rc);
 }
+
+bool runtime::interpreter::INT_Backend::compile(const std::shared_ptr<ngraph::Function>& fun)
+{
+    return false;
+}
+
+bool runtime::interpreter::INT_Backend::is_callable() const
+{
+    return false;
+}
+
+bool runtime::interpreter::INT_Backend::call(
+    const std::vector<std::shared_ptr<runtime::TensorView>>& outputs,
+    const std::vector<std::shared_ptr<runtime::TensorView>>& inputs)
+{
+    return false;
+}

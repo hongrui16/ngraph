@@ -18,16 +18,12 @@
 
 #include <memory>
 
+#include "ngraph/function.hpp"
 #include "ngraph/shape.hpp"
 #include "ngraph/type/element_type.hpp"
 
 namespace ngraph
 {
-    namespace element
-    {
-        class Type;
-    }
-
     namespace runtime
     {
         class ExternalFunction;
@@ -80,6 +76,13 @@ namespace ngraph
             {
                 return create_device_tensor(element::from<T>(), shape);
             }
+
+            virtual bool compile(const std::shared_ptr<ngraph::Function>& fun) = 0;
+
+            virtual bool is_callable() const = 0;
+
+            virtual bool call(const std::vector<std::shared_ptr<runtime::TensorView>>& outputs,
+                              const std::vector<std::shared_ptr<runtime::TensorView>>& inputs) = 0;
         };
     }
 }
