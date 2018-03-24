@@ -58,6 +58,28 @@ namespace ngraph
             {
                 return make_primary_tensor_view(element::from<T>(), shape);
             }
+
+            // New backend
+            static std::shared_ptr<Backend> create_backend(const std::string& type);
+
+            static std::shared_ptr<ngraph::runtime::TensorView>
+                create_host_tensor(const ngraph::element::Type& element_type, const Shape& shape);
+
+            template <typename T>
+            static std::shared_ptr<ngraph::runtime::TensorView>
+                create_host_tensor(const Shape& shape)
+            {
+                return create_host_tensor(element::from<T>(), shape);
+            }
+
+            virtual std::shared_ptr<ngraph::runtime::TensorView>
+                create_device_tensor(const ngraph::element::Type& element_type, const Shape& shape);
+
+            template <typename T>
+            std::shared_ptr<ngraph::runtime::TensorView> create_device_tensor(const Shape& shape)
+            {
+                return create_device_tensor(element::from<T>(), shape);
+            }
         };
     }
 }
