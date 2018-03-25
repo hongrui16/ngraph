@@ -55,8 +55,11 @@ namespace ngraph
                 return make_primary_tensor_view(element::from<T>(), shape);
             }
 
-            // New backend
-            static std::shared_ptr<Backend> create_backend(const std::string& type);
+            /// @brief Create a new Backend object
+            /// @param type The name of a registered backend, such as "CPU" or "GPU"
+            /// @returns shared_ptr to a new Backend or nullptr if the named backend
+            ///   does not exist.
+            static std::shared_ptr<Backend> create(const std::string& type);
 
             static std::shared_ptr<ngraph::runtime::TensorView>
                 create_host_tensor(const ngraph::element::Type& element_type, const Shape& shape);

@@ -50,10 +50,8 @@ TEST(${BACKEND_NAME}, function_name)
     auto B = make_shared<op::Parameter>(element::f32, shape);
     auto f = make_shared<Function>(A + B, op::ParameterVector{A, B}, "funky func name");
 
-    auto manager = runtime::Manager::get("${BACKEND_NAME}");
-    auto external = manager->compile(f);
-    auto backend = manager->allocate_backend();
-    auto cf = backend->make_call_frame(external);
+    auto backend = runtime::Backend::create("${BACKEND_NAME}");
+    backend->compile(f);
 
     // Create some tensors for input/output
     shared_ptr<runtime::TensorView> a = backend->make_primary_tensor_view(element::f32, shape);
@@ -63,7 +61,7 @@ TEST(${BACKEND_NAME}, function_name)
     copy_data(a, test::NDArray<float, 2>({{1, 2}, {3, 4}}).get_vector());
     copy_data(b, test::NDArray<float, 2>({{5, 6}, {7, 8}}).get_vector());
 
-    cf->call({result}, {a, b});
+    backend->call({result}, {a, b});
     EXPECT_EQ(read_vector<float>(result),
               (test::NDArray<float, 2>({{6, 8}, {10, 12}})).get_vector());
 }

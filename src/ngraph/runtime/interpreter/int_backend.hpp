@@ -22,8 +22,13 @@ namespace ngraph
 {
     namespace runtime
     {
+        class CallFrame;
+
         namespace interpreter
         {
+            class ExternalFunction;
+            class INT_CallFrame;
+
             class INT_Backend : public runtime::Backend
             {
             public:
@@ -41,6 +46,10 @@ namespace ngraph
 
                 bool call(const std::vector<std::shared_ptr<runtime::TensorView>>& outputs,
                           const std::vector<std::shared_ptr<runtime::TensorView>>& inputs) override;
+
+            private:
+                std::unique_ptr<interpreter::ExternalFunction> m_external_function;
+                std::shared_ptr<interpreter::INT_CallFrame> m_call_frame;
             };
         }
     }

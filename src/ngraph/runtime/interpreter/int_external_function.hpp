@@ -28,8 +28,7 @@ namespace ngraph
     {
         namespace interpreter
         {
-            class ExternalFunction : public ngraph::runtime::ExternalFunction,
-                                     public std::enable_shared_from_this<ExternalFunction>
+            class ExternalFunction : public ngraph::runtime::ExternalFunction
             {
             public:
                 ExternalFunction(const std::shared_ptr<ngraph::Function>& function,

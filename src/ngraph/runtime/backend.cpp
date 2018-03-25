@@ -21,7 +21,7 @@
 using namespace std;
 using namespace ngraph;
 
-std::shared_ptr<runtime::Backend> runtime::Backend::create_backend(const std::string& type)
+std::shared_ptr<runtime::Backend> runtime::Backend::create(const std::string& type)
 {
     std::shared_ptr<Manager> manager = runtime::Manager::get(type);
     return manager->allocate_backend();
